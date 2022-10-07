@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Student>
+    <Person> 
+		<SchoolAssignedPersonID>50084</SchoolAssignedPersonID > 
+		<Birth> 
+			<BirthDate>1993-02-01</Birthdate> 
+		</Birth> 
+		<Name> 
+			<FirstName>First</FirstName> 
+			<LastName>Last</LastName> 
+		</Name> 
+		<Contacts> 
+			<Email>email@domain.com</Email> 
+		</Contacts> 
+	</Person> 
+	<LearningRecord> 
+		<MicrocredentialAward> 
+			<AwardID>123456789</AwardID> 
+			<AwardLevel>Other</AwardLevel> 
+			<AwardTitle>Award Name Here</AwardTitle> 
+			<AwardDescription>Description Here</AwardDescription> 
+			<AwardHonours>Yes</AwardHonours> 
+			<MicrocredentialAwardProgram> 
+				<ProgramName>Program Here</ProgramName> 
+			</MicrocredentialAwardProgram> 
+			<AwardDate>2022-10-01</AwardDate 
+			<IssuedDate>2022-10-07</IssuedDate> 
+		</MicrocredentialAward> 
+		<MicrocredentialOrganization> 
+			<IssuingBodyID>ID001</IssuingBodyID> 
+			<IssuingBodyName>Test Uni</IssuingBodyName> 
+			<Contacts> 
+				<Address> 
+					<CountryCode>CA</CountryCode> 
+				</Address> 
+			<URL>http://google.ca</URL> 
+			</Contacts> 
+		</MicrocredentialOrganization> 
+	</LearningRecord> 
+</Student>

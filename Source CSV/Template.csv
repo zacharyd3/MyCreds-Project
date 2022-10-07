@@ -1,0 +1,2 @@
+SchoolAssignedPersonID,BirthDate,FirstName,LastName,Email,AwardID,AwardLevel,AwardTitle,AwardDescription,AwardHonours,ProgramName,AwardDate,IssuedDate,IssuingBodyID,IssuingBodyName,CountryCode,URL
+50084,1993-02-01,First,Last,email@domain.com,123456789,Other,Award Name Here,Description Here,Yes,Program Here,2022-10-01,2022-10-07,ID001,Test Uni,CA,http://google.ca
