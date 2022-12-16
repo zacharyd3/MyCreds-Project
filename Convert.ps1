@@ -9,7 +9,9 @@ $folderPathDest = 'C:\IT\XML Conversion\Destination XML'
 # create a template Here-string for the XML (all <Person> nodes need to be inside a root node <Student>)
 $xmlTemplate = @"
 <?xml version="1.0" encoding="utf-8"?>
-<Student>
+<Student xmlns="https://core.digitary.net/schema/mycreds/vsp/2022/11/01"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://core.digitary.net/schema/mycreds/vsp/2022/11/01 https://core.digitary.net/schema/mycreds/vsp/2022/11/01">
 @@STUDENTNODES@@
 </Student>
 "@
@@ -17,6 +19,7 @@ $xmlTemplate = @"
 # and also a template for the individual <Person> nodes
 # inside are placeholders '{0}' we will fill in later
 $studentTemplate = @"
+
     <Person>
 		<SchoolAssignedPersonID>{0}</SchoolAssignedPersonID>
 		<Birth>
@@ -54,6 +57,7 @@ $studentTemplate = @"
 			</Contacts>
 		</MicrocredentialOrganization>
 	</LearningRecord>
+	
 "@
 
 $itemNumber=0
