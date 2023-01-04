@@ -40,9 +40,9 @@ $studentTemplate = @"
 			<AwardTitle>{7}</AwardTitle>
 			<AwardDescription>{8}</AwardDescription>
 			<AwardHonours>{9}</AwardHonours>
-			<MicrocredentialAwardProgram>
+			<AwardProgram>
 				<ProgramName>{10}</ProgramName>
-			</MicrocredentialAwardProgram>
+			</AwardProgram>
 			<AwardDate>{11}</AwardDate>
 			<IssuedDate>{12}</IssuedDate>
 		</MicrocredentialAward>
