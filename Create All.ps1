@@ -7,7 +7,7 @@ cls
 
 # Edit these files and locations to your instance
 $folderDest = 'C:\IT\XML Conversion\Destination'
-$folderPath = 'C:\IT\XML Conversion\Source CSV\Template.csv'
+$folderPath = 'C:\IT\XML Conversion\Source.csv'
 
 # Setup variables
 $csvExportLocation = $folderDest+"\"+$batchName+".csv"

@@ -1,7 +1,7 @@
-##Created by Zach Dokuchic at Oshki-Wenjack for use with the MyCreds project.
+##Created by Zach Dokuchic | Oshki-Wenjack for use with the MyCreds project.
 cls
 # Folder containing source CSV files
-$folderPath = 'C:\IT\XML Conversion\Source CSV\Template.csv'
+$folderPath = 'C:\IT\XML Conversion\Source.csv'
 
 # Destination folder for the new files
 $folderPathDest = 'C:\IT\XML Conversion\Destination'
