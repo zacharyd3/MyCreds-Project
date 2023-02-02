@@ -7,7 +7,7 @@ cls
 
 # Edit these files and locations to your instance
 $folderDest = 'C:\IT\XML Conversion\Destination'
-$folderPath = 'C:\IT\XML Conversion\Source.csv'
+$sourcePath = 'C:\IT\XML Conversion\Source.csv'
 
 # Setup variables
 $csvExportLocation = $folderDest+"\"+$batchName+".csv"
@@ -70,7 +70,7 @@ $studentTemplate = @"
 "@
 
 # Generate a list of all files in the folder and pipe it to ForEach-Object
-Get-ChildItem -Path $folderPath -File | ForEach-Object {  	
+Get-ChildItem -Path $sourcePath -File | ForEach-Object {  	
 
     # Import the CSV file
     $data = Import-Csv -Path $_.FullName

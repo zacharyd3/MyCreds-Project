@@ -1,10 +1,13 @@
-##Created by Zach Dokuchic | Oshki-Wenjack for use with the MyCreds project.
+## Created by Zach Dokuchic | Oshki-Wenjack for use with the MyCreds project.
 cls
-# Folder containing source CSV files
-$folderPath = 'C:\IT\XML Conversion\Source.csv'
 
-# Destination folder for the new files
-$folderPathDest = 'C:\IT\XML Conversion\Destination'
+# Added padding so both 
+# files have the configuration 
+# sections in the same spot
+
+# Edit these files and locations to your instance
+$folderDest = 'C:\IT\XML Conversion\Destination'
+$sourcePath = 'C:\IT\XML Conversion\Source.csv'
 
 # create a template Here-string for the XML (all <Person> nodes need to be inside a root node <Student>)
 $xmlTemplate = @"
@@ -62,7 +65,7 @@ $studentTemplate = @"
 
 $itemNumber=0
 # Generate a list of all files in the folder and pipe it to ForEach-Object
-Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {  	
+Get-ChildItem -Path $sourcePath -Filter '*.csv' -File | ForEach-Object {  	
    
     # Import the CSV file
     $data = Import-Csv -Path $_.FullName
@@ -77,7 +80,7 @@ Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {
     Write-Output "------------------------------------"
     Write-Output ""
 
-    # Iterates through the xmlOutput array
+     # Iterates through the xmlOutput array
     while ($itemNumber -lt ($xmlOutput.count))
 	{
         
@@ -85,7 +88,7 @@ Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {
         Write-Output (-join('Checking Row: ',($itemNumber+1)))
 
         # Combines destination path and file name with extension .xml
-	    $filePathdest = (-join($folderPathDest,'\',$data[$itemNumber].SchoolAssignedPersonID,'.xml'))
+	    $filePathdest = (-join($folderDest,'\',$data[$itemNumber].SchoolAssignedPersonID,'.xml'))
         
         # Generate and save the XML if there is only 1 row, the variable stays a string the if statement manipulates it based on those details.
         if ($xmlOutput.Count -eq 1){
@@ -96,7 +99,7 @@ Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {
         }
 
         # Output the log as files are generated
-        Write-Output (-join('XML generated for ',$data[$itemNumber].FirstName,' ',$data[$itemNumber].LastName,', save location = ',$folderPathDest,'\',$data[$itemNumber].SchoolAssignedPersonID,'.xml','.'))
+        Write-Output (-join('XML generated for ',$data[$itemNumber].FirstName,' ',$data[$itemNumber].LastName,', save location = ',$filePathdest))
         Write-Output ""
         $itemNumber++
     }
