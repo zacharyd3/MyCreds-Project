@@ -73,8 +73,9 @@ Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {
     }
 
     # Outputs the total number of rows found (debugging)
-    Write-Output (-join('Total Rows count 1: ',$xmlOutput.count))
-    Write-Output (-join('Total Rows count 2: ',$linesInFile))
+    Write-Output (-join('Total rows to process: ',$xmlOutput.count))
+    Write-Output "------------------------------------"
+    Write-Output ""
 
     # Iterates through the xmlOutput array
     while ($itemNumber -lt ($xmlOutput.count))
@@ -96,6 +97,10 @@ Get-ChildItem -Path $folderPath -Filter '*.csv' -File | ForEach-Object {
 
         # Output the log as files are generated
         Write-Output (-join('XML generated for ',$data[$itemNumber].FirstName,' ',$data[$itemNumber].LastName,', save location = ',$folderPathDest,'\',$data[$itemNumber].SchoolAssignedPersonID,'.xml','.'))
+        Write-Output ""
         $itemNumber++
     }
 }	
+Write-Output "------------------------------------"
+Write-Output "Done"
+Read-Host -Prompt "Press Enter to exit"
