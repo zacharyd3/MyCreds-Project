@@ -1,13 +1,18 @@
 # Created by Zach Dokuchic at Oshki-Wenjack for use with the MyCreds project.
 cls
 
-# Set the batch name based on user input
-$batchName = Read-Host -Prompt "What would you like to name this batch"
-cls
-
 # Edit these files and locations to your instance
 $folderDest = 'C:\IT\XML Conversion\Destination'
 $sourcePath = 'C:\IT\XML Conversion\Source.csv'
+$accessChargeMethod = ""
+$accessChargeAmount = ""
+$accessChargeCurrency = ""
+$accessChargePeriod = ""
+
+# Set the batch name based on user input
+$batchName = Read-Host -Prompt "What would you like to name this batch"
+$completionSemester = Read-Host -Prompt "What Semester is this for (i.e Winter 2023)"
+cls
 
 # Setup variables
 $csvExportLocation = $folderDest+"\"+$batchName+".csv"
@@ -77,9 +82,7 @@ Get-ChildItem -Path $sourcePath -File | ForEach-Object {
     $fullName = $data.FirstName+ " " +$data.LastName
 
 	$xmlOutput = foreach ($Student in $data) 
-    {
-		$studentTemplate -f $Student.SchoolAssignedPersonID, $Student.BirthDate, $Student.FirstName, $Student.LastName, $Student.Email, $Student.AwardID, $Student.AwardLevel, $Student.AwardTitle, $Student.AwardDescription, $Student.AwardHonours, $Student.ProgramName, $Student.AwardDate, $Student.IssuedDate, $Student.IssuingBodyID, $Student.IssuingBodyName, $Student.CountryCode, $Student.URL
-    }
+    {$studentTemplate -f $Student.SchoolAssignedPersonID, $Student.BirthDate, $Student.FirstName, $Student.LastName, $Student.Email, $Student.AwardID, $Student.AwardLevel, $Student.AwardTitle, $Student.AwardDescription, $Student.AwardHonours, $Student.ProgramName, $Student.AwardDate, $Student.IssuedDate, $Student.IssuingBodyID, $Student.IssuingBodyName, $Student.CountryCode, $Student.URL}
 
     # Outputs the total number of rows found (debugging)
     Write-Output (-join('Total rows to process: ',$xmlOutput.count))
@@ -108,29 +111,29 @@ Get-ChildItem -Path $sourcePath -File | ForEach-Object {
         Write-Output (-join('XML generated for ',$data[$itemNumber].FirstName,' ',$data[$itemNumber].LastName))
 
         # Convert the Award Title into the document type via parsing
-        $documentType = $data.AwardTitle[$itemNumber].toLower()
+        $documentType = $data[$itemNumber].AwardTitle.toLower()
         $documentType = $documentType -replace '\s','_'
 
         # Create the output CSV files
-        Write-Output (-join(($data.FirstName[$itemNumber],' ',$data.LastName[$itemNumber],' added to the destination CSV')))
+        Write-Output (-join(($data[$itemNumber].FirstName,' ',$data[$itemNumber].LastName,' added to the destination CSV')))
         Write-Output ""
         $newRow = [PSCustomObject] @{
-        "id" = $data.SchoolAssignedPersonID[$itemNumber];
-        "fullName" = $data.FirstName[$itemNumber]+ " " +$data.LastName[$itemNumber];
-        "email" = $data.Email[$itemNumber];
-        "file" = $data.SchoolAssignedPersonID[$itemNumber]+".xml";
+        "id" = $data[$itemNumber].SchoolAssignedPersonID;
+        "fullName" = $data[$itemNumber].FirstName+ " " +$data[$itemNumber].LastName;
+        "email" = $data[$itemNumber].Email;
+        "file" = $data[$itemNumber].SchoolAssignedPersonID+".xml";
         "documentType" = $documentType;
-        "display_name" = $data.AwardTitle[$itemNumber];
+        "display_name" = $data[$itemNumber].AwardTitle;
         "initial_login_type" = "email";
         "initial_login_idp" = "digitary";
-        "initial_login_value" = $data.Email[$itemNumber];
-        "access_charge_method" = "";
-        "access_charge_amount" = "";
-        "access_charge_currency" = "";
-        "access_charge_period" = "";
+        "initial_login_value" = $data[$itemNumber].Email;
+        "access_charge_method" = $accessChargeMethod;
+        "access_charge_amount" = $accessChargeAmount;
+        "access_charge_currency" = $accessChargeCurrency;
+        "access_charge_period" = $accessChargePeriod;
         "Batch Name" = $batchName;
-        "Program ID" = "";
-        "Completion Semester" = "";}
+        "Program ID" = $data[$itemNumber].ProgramName;
+        "Completion Semester" = $completionSemester;}
 
         # Add to the item number variable to setup the next loop
         $itemNumber++
@@ -152,4 +155,4 @@ Compress-Archive -Path $folderDest\* -DestinationPath $zipExportLocation -Force
 Remove-Item $folderDest\* -Exclude *.zip
 Write-Output "------------------------------------"
 Write-Output "Done"
-Read-Host -Prompt "Press Enter to exit"
+Start-Sleep -Seconds 15
