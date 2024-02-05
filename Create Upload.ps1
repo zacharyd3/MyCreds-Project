@@ -1,9 +1,51 @@
-# Created by Zach Dokuchic at Oshki-Wenjack for use with the MyCreds project.
+# Created by Zach Dokuchic at Oshki-Pimache-O-Win: The Wenjack Education Institute for use with the MyCreds project.
 cls
 
+function Get-CSV-Files {
+    param (
+        [Parameter(Mandatory = $true)]
+        $folderPath
+    )
+
+    # Get all CSV files in the working directory
+    $csvFiles = Get-ChildItem -Path $folderPath\* -Include "*.csv"
+
+    if ($csvFiles.Count -eq 0) {
+        Write-Error "Error: No CSV files found in folder."
+        exit
+    }
+    else {
+        if ($csvFiles.Count -eq 1) {
+            return $csvFiles[0].FullName
+        }
+        else {
+            
+            # Print options for user to select
+            Write-Host "Select the CSV file to process:"
+    
+            for ($i=0; $i -lt $csvFiles.Count; $i++) {
+                Write-Host "$i) $($csvFiles[$i].Name)"
+            }
+    
+            # Prompt user for selection
+            $selectedOption = Read-Host "Enter the number of the CSV file to process (0-$($csvFiles.Count-1))"
+    
+            # Validate user input
+            if ($selectedOption -notmatch '^\d+$' -or $selectedOption -ge $csvFiles.Count) {
+                Write-Error "Error: Invalid selection."
+                exit
+            }
+        }
+        return $csvFiles[$selectedOption].FullName
+    }
+}
+
 # Edit these files and locations to your instance
-$folderDest = 'C:\IT\XML Conversion\Destination'
-$sourcePath = 'C:\IT\XML Conversion\Source.csv'
+$workingDirectory = "$PSScriptRoot"
+$workingDirectory = "\\oshkisv42\Office_Data\OSHKI-PIMACHE-O-WIN\Oshki Academics\MyCreds"
+$folderDest = "$workingDirectory\Zip File"
+$sourcePath = "$workingDirectory\Reports"
+$sourceFile = Get-CSV-Files -folderPath $sourcePath
 $accessChargeMethod = ""
 $accessChargeAmount = ""
 $accessChargeCurrency = ""
@@ -75,7 +117,7 @@ $studentTemplate = @"
 "@
 
 # Generate a list of all files in the folder and pipe it to ForEach-Object
-Get-ChildItem -Path $sourcePath -File | ForEach-Object {  	
+Get-ChildItem -Path $sourceFile -File | ForEach-Object {  	
 
     # Import the CSV file
     $data = Import-Csv -Path $_.FullName
